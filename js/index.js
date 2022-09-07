@@ -273,15 +273,24 @@ var input1 = getTag('.payfor input')
   input1.value = obj.seconds; 
 
  }
-  input1.onblur = function () {
+  input1.onblur = function (event) {
+    var reg =  /[1-9]\d*/;
+    var parenreg = new RegExp(reg);
+    console.log(!parenreg.test(input1.value));
+    if (!parenreg.test(input1.value)) {
+      input1.value = 1;
+    }
+    if (input1.value > 99) {
+      input1.value = 99;
+    }
     obj.seconds = input1.value;
   }
   var checkboxs = getTags('.choose input');
+  
   checkboxs.forEach(function (item) {
     item.addEventListener('click', function () {
       var price = item.parentElement.querySelector('label').textContent;
       if (item.checked) {
-       
         obj.thir = price - 0;
         var all = 0;
         all = (obj.thir + obj.initial_price) * obj.seconds;
@@ -293,10 +302,15 @@ var input1 = getTag('.payfor input')
     })
  })
  
-
+ 
   
  
-
+  
+  
+  
+  
+  
+   
   
 // 封装一个渲染函数
  function rednerTags() {
